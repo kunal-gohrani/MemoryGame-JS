@@ -23,3 +23,7 @@ input {
     position: relative;
     top: 1.25em;
 }
+
+.hidden {
+    display: none;
+}

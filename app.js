@@ -48,8 +48,6 @@ const images = [{
     }
 ]
 
-let squares = document.querySelectorAll('.square');
-squares = Array.from(squares);
 let cardsChosenIds = [];
 let cardsChosen = [];
 let cardsWon = [];
@@ -142,18 +140,23 @@ const init = () => {
     cardsChosenIds = [];
     cardsChosen = [];
     cardsWon = [];
-    for (let i = 1; i <= 12; i++) {
+    for (let i = 1; i <= images.length; i++) {
         random = generateRandomNumber(ids);
         ids.push(random);
         card = document.createElement('img');
         card.setAttribute('src', 'Images/blank.jpg');
+        let name = images[random].name;
         card.setAttribute('data-id', random.toString());
+        card.setAttribute('alt', name);
         card.addEventListener('click', flipCard);
         document.querySelector('.container').appendChild(card);
     }
 
     document.querySelector('#timer').textContent = seconds;
-    timerElement = setInterval(time, 1000);
+    setTimeout(() => {
+        timerElement = setInterval(time, 1000);
+        document.querySelector('#loader').innerHTML = '';
+    }, 1000);
 };
 
 document.querySelector('#reset').addEventListener('click', init);
