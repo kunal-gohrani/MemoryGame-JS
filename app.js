@@ -54,6 +54,9 @@ let cardsChosenIds = [];
 let cardsChosen = [];
 let cardsWon = [];
 let score = 0;
+let timerElement;
+let seconds = 20;
+let winStreak = 0;
 const generateRandomNumber = (ids) => {
     let flag = 0;
     let random;
@@ -95,6 +98,9 @@ const checkForMatch = () => {
         document.querySelector('#score').textContent = score;
         if (score === images.length / 2) {
             alert('YOU WON!!');
+            clearInterval(timerElement);
+            winStreak += 1;
+            document.querySelector('#winStreak').textContent = winStreak;
         }
     } else {
         cardsChosen.forEach(cur => {
@@ -105,7 +111,18 @@ const checkForMatch = () => {
     cardsChosen = [];
 };
 
-
+const time = () => {
+    seconds -= 1;
+    document.querySelector('#timer').textContent = seconds;
+    if (seconds == 0) {
+        alert('YOU HAVE LOST THE GAME!');
+        Array.from(document.querySelectorAll('img')).forEach(cur => {
+            cur.removeEventListener('click', flipCard);
+        });
+        clearInterval(timerElement);
+        winStreak = 0;
+    }
+};
 
 const init = () => {
     let ids = [];
@@ -118,8 +135,10 @@ const init = () => {
     //     cur.addEventListener('click', flipCard);
     // });
     document.querySelector('.container').innerHTML = '';
-    score = 0
+    score = 0;
+    seconds = 20;
     document.querySelector('#score').textContent = score;
+    document.querySelector('#winStreak').textContent = winStreak;
     cardsChosenIds = [];
     cardsChosen = [];
     cardsWon = [];
@@ -133,6 +152,8 @@ const init = () => {
         document.querySelector('.container').appendChild(card);
     }
 
+    document.querySelector('#timer').textContent = seconds;
+    timerElement = setInterval(time, 1000);
 };
 
 document.querySelector('#reset').addEventListener('click', init);
