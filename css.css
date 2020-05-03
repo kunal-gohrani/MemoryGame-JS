@@ -1,0 +1,25 @@
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    width: 400px;
+    height: 300px;
+    flex-wrap: wrap;
+    /* border: 2px solid black; */
+}
+
+.square {
+    min-width: 96px;
+    max-width: 100px;
+    max-height: 100px;
+    min-height: 96px;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+input {
+    position: relative;
+    top: 1.25em;
+}
